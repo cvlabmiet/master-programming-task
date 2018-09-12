@@ -102,9 +102,13 @@ Additional questions
             ?cba? obj;
         }
 
+#. How to initialize members of the same class in different constructors?
+
+#. How to initialize a member in separate function within member initializer list?
+
 [optional] Write complete project (``CMakeLists.txt``, folder hierarchy and tests).
 Themes:
 
 * `INI-parser <https://en.wikipedia.org/wiki/INI_file>`_ with EBNF in comments;
-* implement iterator on multidimensional array with the ability to choose the direction of iterations (by x-, y- or z-axis, etc.);
+* implement iterator of multidimensional array with the ability to choose the direction of iterations (by x-, y- or z-axis, etc.);
 * provide example to work with `google-protobuf <https://developers.google.com/protocol-buffers>`_.

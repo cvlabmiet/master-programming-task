@@ -15,3 +15,5 @@ find_program(AWK_EXECUTABLE awk gawk DOC "awk executable")
 file(GLOB_RECURSE SRCS *.hpp)
 add_custom_target(encrypt COMMAND ${AWK_EXECUTABLE} -i inplace -v enc=1 -f ${CMAKE_SOURCE_DIR}/encrypt.awk ${SRCS})
 add_custom_target(decrypt COMMAND ${AWK_EXECUTABLE} -i inplace -v enc=0 -f ${CMAKE_SOURCE_DIR}/encrypt.awk ${SRCS})
+
+add_custom_target(answer COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_SOURCE_DIR} -P ${CMAKE_SOURCE_DIR}/find_answers.cmake)

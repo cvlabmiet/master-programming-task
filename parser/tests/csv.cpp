@@ -42,7 +42,7 @@ TEST_CASE("csv::csv")
     )";
 
     auto i = parser::load_from_string<types::csv::csv>(s, parser::csv::csv);
-    //? Why double braket?
+    //? Why double parentheses?
     CHECK((i[0] == std::vector<std::string>{"cell1", "cell2", "cell3"}));
     CHECK((i[1] == std::vector<std::string>{"miet", "msu", "mephi"}));
     CHECK(i[2][0] == "with spaces");
