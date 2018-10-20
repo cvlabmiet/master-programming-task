@@ -20,7 +20,7 @@ TEST_CASE("iomanip::simple")
 TEST_CASE("iomanip::one_operand")
 {
     std::stringstream s;
-    static_assert(!std::is_same<decltype(s << squares), std::ostream&>::value);
+    static_assert(!std::is_same_v<decltype(s << squares), std::ostream&>);
     s << "some test " << squares << 123 << " and " << 123;
     CHECK(s.str() == "some test [123] and 123");
 }
@@ -28,6 +28,10 @@ TEST_CASE("iomanip::one_operand")
 TEST_CASE("iomanip::two_operands")
 {
     std::stringstream s;
+    static_assert(!std::is_same_v<decltype(s << add), std::ostream&>);
+    static_assert(!std::is_same_v<decltype(s << add << 48), std::ostream&>);
+    static_assert(std::is_same_v<decltype(s << add << 48 << 56), std::ostream&>);
+
     s << add << 124 << 589 << " == " << 713;
     CHECK(s.str() == "713 == 713");
 }
