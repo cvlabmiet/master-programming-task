@@ -85,3 +85,13 @@ TEST_CASE("proxy::threadsafe")
         REQUIRE(end - start >= 50ms);
     }
 }
+
+TEST_CASE("proxy::primitive")
+{
+    int i = 7;
+    ptr_holder p(&i);
+
+    *(p.operator->().operator->()) = 99;
+
+    CHECK(i == 99);
+}
