@@ -71,6 +71,7 @@ TEST_CASE("iterator::operations")
     SECTION("next row")
     {
         CHECK(distance(it + 127, it + 128) == 1);
+        CHECK(distance(it + 128, it + 127) == -1);
     }
 }
 
