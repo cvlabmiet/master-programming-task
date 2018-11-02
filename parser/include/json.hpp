@@ -71,7 +71,7 @@ namespace parser
         ... json??? = ...
         //}
 
-        BOOST_SPIRIT_DEFINE(array, object, json);
+        BOOST_SPIRIT_DEFINE(array, object, json)
     }
 }
 

@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.9)
 
 include(CTest)
 
+add_compile_options(-Wall -Wextra -pedantic -Werror)
+
 file(GLOB _files LIST_DIRECTORIES TRUE *)
 
 foreach(_file ${_files})
