@@ -47,7 +47,7 @@ public:
 namespace std
 {
     template<typename T, class TypeMap>
-    const auto& get(const TypeMap& tm)
+    ?? get(??TypeMap?? tm)
     {
         //{ How to call ``as``?
         return ???
