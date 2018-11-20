@@ -11,7 +11,7 @@
 
 TEST_CASE("type_map::int")
 {
-    type_map<int, int, float, uint8_t> m{{4, 86, -9}};
+    const type_map<int, int, float, uint8_t> m{{4, 86, -9}};
 
     SECTION("std::get")
     {
@@ -34,7 +34,7 @@ TEST_CASE("type_map::enum")
 
     //? Is this form more robust? Why?
     //``type_map<type_e> m{let<uint8_t>(U8), let<int8_t>(I8), let<float>(F32), let<uint32_t>(U32)};``
-    type_map<type_e, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float> m{{
+    const type_map<type_e, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float> m{{
         U8, I8, U16, I16, U32, I32, F32
     }};
 

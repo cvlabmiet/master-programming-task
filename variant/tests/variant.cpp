@@ -42,12 +42,12 @@ TEST_CASE("variant::recursive_array2")
 
 TEST_CASE("variant::variant_decorator")
 {
-    variant_decorator<std::string, float, int> v{86};
+    variant_decorator<std::string, float, int, boost::recursive_wrapper<bool>> v{86};
     CHECK(std::get<int>(v) == 86);
 
     SECTION("content")
     {
-        v = "text";
+        v = std::string("text");
         CHECK(v.as<std::string>() == "text");
 
         v = 33.56f;
@@ -64,6 +64,12 @@ TEST_CASE("variant::variant_decorator")
     {
         v.as<int>() = 53;
         CHECK(v.as<int>() == 53);
+    }
+
+    SECTION("recursive_wrapper")
+    {
+        v = boost::recursive_wrapper<bool>{true};
+        CHECK(v.as<bool>() == true);
     }
 }
 

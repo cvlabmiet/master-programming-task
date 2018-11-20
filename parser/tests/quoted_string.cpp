@@ -29,7 +29,7 @@ TEST_CASE("quoted_string::comma")
     CHECK(i == R"(abc comma (,))");
 }
 
-TEST_CASE("quoted_string::quote", "[!mayfail]")
+TEST_CASE("quoted_string::quote")
 {
     auto i = loads(R"#("text with \"quote\"")#");
     CHECK(i == R"(text with "quote")");
