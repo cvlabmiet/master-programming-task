@@ -7,18 +7,11 @@ Tasks list
 ----------
 
 #. I/O stream manipulators.
-
-#. Iterator.
-
 #. Proxy object.
-
+#. Iterator.
 #. Using of ``std::variant``.
-
-#. Parsers by ``boost::spirit::x3``:
-
-   * csv;
-   * json.
-
+#. CSV parser by ``boost::spirit::x3``.
+#. JSON parser by ``boost::spirit::x3``.
 #. Type map to describe mapping of compile-time types to runtime values.
 
 How to build?
@@ -32,38 +25,40 @@ Just use `cmake <https://cmake.org>`_::
     build/ $ make -j
     build/ $ ctest
 
-If you want to work with particular project::
+If you want to work with particular project, just uncomment (remove ``#`` sign) string ``add_subdirectory`` with project name.
+You can launch the tests from this project only (shown for ``<myproject>``)::
 
-    build/ $ cmake ../iterator
+    build/ $ cmake ..
     build/ $ make -j
-    build/ $ ctest
+    build/ $ ctest -R <myproject>
+
+Or use catch executable for detail report::
+
+    build/ $ ./<myproject>/tests_<myproject>
 
 Another approach is to use docker image ``igsha/cxx-miet``.
 
 #. Install `docker <https://www.docker.com>`_.
-
 #. Pull image and start docker-session::
 
-        $ docker run -u `id -u`:`id -g` -v $PWD:/data -it igsha/cxx-miet:0.1
-        bash-4.4$ <-- this means you are in docker-session
+        $ docker run -u `id -u`:`id -g` -v $PWD:/data -it igsha/cxx-miet:0.2
+        bash-4.4$ <-- this means you are in a docker-session
 
    * once downloaded session will be available locally;
    * flag ``-u `id -u`:`id -g``` is used to bring the same permissions into docker as your local user permissions;
    * flag ``-v $PWD:/data`` is used to mount your current source directory into docker like folder ``/data``;
    * notes for Windows users: you don't need flag ``-u``, replace ``$PWD`` with the name of current directory.
-
-#. Inside docker-session call the same command sequence like was done above (``mkdir``, ``cd``, ``cmake``, etc.).
-
+#. Within docker-session call the same command sequence like was done above (``mkdir``, ``cd``, ``cmake``, etc.).
 #. To exit docker-session press ``Ctrl-D`` or type ``exit`` command.
 
 How to work with projects
 =========================
 
-Each project is a complete cmake-project with
+Each project is a subproject with
 
 * ``CMakeLists.txt``;
 * ``include`` that represent "source" of a project;
-* ``tests`` - is a main part to check task.
+* ``tests`` is a main part to check task.
 
 Students should work only with files inside ``include`` folder.
 The main criteria is to pass all tests of a project.
@@ -80,9 +75,7 @@ Additional questions
 ====================
 
 #. How to declare and define function within another function?
-
 #. How to copy lambda?
-
 #. How to call non-constant method of a member within constant method?
 
    .. code::
@@ -103,7 +96,6 @@ Additional questions
         }
 
 #. How to initialize members of the same class in different constructors?
-
 #. How to initialize a member in separate function within member initializer list?
 
 [optional] Write complete project (``CMakeLists.txt``, folder hierarchy and tests).

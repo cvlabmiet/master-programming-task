@@ -4,8 +4,10 @@
  * @author Anonymous
  */
 
-#include <catch.hpp>
+#include <catch2/catch.hpp>
+
 #include <string>
+
 #include <variant.hpp>
 
 TEST_CASE("variant::number")

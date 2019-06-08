@@ -4,11 +4,12 @@
  * @author Anonymous
  */
 
+#include <catch2/catch.hpp>
+
 #include <chrono>
 #include <string>
 #include <future>
 
-#include <catch.hpp>
 #include <proxy.hpp>
 
 #include <boost/range/irange.hpp>
@@ -35,19 +36,22 @@ namespace Catch
     };
 }
 
-// used for tests
-struct my_struct
+namespace
 {
-    int i = 0;
-    string s = "hello";
-    float f = -1.0;
-
-    template<class Duration>
-    void sleep(Duration x) const
+    // used for tests
+    struct my_struct
     {
-        this_thread::sleep_for(x);
-    }
-};
+        int i = 0;
+        string s = "hello";
+        float f = -1.0;
+
+        void method(std::future<void>& f)
+        {
+            f.wait_for(5s);
+            s = "world";
+        }
+    };
+}
 
 TEST_CASE("proxy::access")
 {
@@ -66,23 +70,32 @@ TEST_CASE("proxy::threadsafe")
     my_struct st;
     ptr_holder p(&st);
 
-    for (auto _ : boost::irange(0, 20))
+    for (auto _[[maybe_unused]] : boost::irange(0, 20))
     {
-        //? Why I need ``std::promise`` here?
+        p->s = "hello";
+
+        //? Why I need 2 ``std::promise`` here?
+        std::promise<void> start;
         std::promise<void> notifier;
-        //? Why I don't use ``thr`` anywhere? How the innder thread will be released?
-        auto thr = std::async([&p, &notifier]()
+        auto thr = std::async([&p, f = std::move(notifier.get_future()), &start]() mutable
         {
-            notifier.set_value();
-            p->sleep(50ms);
+            start.set_value();
+            p->method(f);
         });
-        notifier.get_future().get();
 
-        auto start = chrono::high_resolution_clock::now();
+        start.get_future().get(); // start has passed
+
+        //? Why ptr_holder is not used here?
+        CHECK(st.s == "hello");
+
+        notifier.set_value();
         p->i = 75;
-        auto end = chrono::high_resolution_clock::now();
 
-        REQUIRE(end - start >= 50ms);
+        //? What happens if I delete get()?
+        thr.get();
+
+        CHECK(p->i == 75);
+        CHECK(p->s == "world");
     }
 }
 

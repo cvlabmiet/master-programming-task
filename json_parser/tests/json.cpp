@@ -4,7 +4,8 @@
  * @author Anonymous
  */
 
-#include <catch.hpp>
+#include <catch2/catch.hpp>
+
 #include <json.hpp>
 #include <parser.hpp>
 

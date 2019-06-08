@@ -8,6 +8,7 @@
 #define __PARSER_HPP__
 
 #include <boost/spirit/home/x3.hpp>
+
 #include <string>
 
 namespace parser

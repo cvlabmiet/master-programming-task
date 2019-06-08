@@ -1,8 +1,8 @@
 with import <nixpkgs> {};
 mkShell rec {
   name = "cxx-tasks";
-  buildInputs = [ boost catch ];
-  nativeBuildInputs = [ cmake gnumake gcc8 gdb valgrind strace ];
+  buildInputs = [ boost168 catch2 ];
+  nativeBuildInputs = [ cmake gnumake gcc9 gdb valgrind strace binutils ];
   hardeningDisable = [ "all" ];
 
   env = pkgs.buildEnv {

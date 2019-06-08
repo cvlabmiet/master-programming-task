@@ -4,7 +4,8 @@
  * @author Anonymous
  */
 
-#include <catch.hpp>
+#include <catch2/catch.hpp>
+
 #include <parser.hpp>
 #include <quoted_string.hpp>
 
@@ -55,5 +56,5 @@ TEST_CASE("quoted_string::failure")
     };
 
     for (const auto& x : s)
-        CHECK_THROWS_AS(loads(x), std::runtime_error&);
+        CHECK_THROWS_AS(loads(x), std::runtime_error);
 }

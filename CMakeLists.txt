@@ -1,17 +1,26 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.12)
+project(cxx-tasks VERSION 0.2.0 LANGUAGES CXX DESCRIPTION "Home tasks for C++ training")
+
+set(CMAKE_CXX_STANDARD 17)
+add_compile_options(-Wall -Wextra -pedantic -Werror)
 
 include(CTest)
 
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+find_package(Catch2 2.8 REQUIRED)
+include(Catch)
+add_library(catch_entry test_entry.cpp)
+target_link_libraries(catch_entry PUBLIC Catch2::Catch2)
 
-file(GLOB _files LIST_DIRECTORIES TRUE *)
+set(BUILD_SHARED_LIBS ON) # need for Boost::system
+find_package(Boost 1.68 REQUIRED COMPONENTS system)
 
-foreach(_file ${_files})
-    if(IS_DIRECTORY ${_file} AND EXISTS "${_file}/CMakeLists.txt")
-        message(STATUS "Add subproject ${_file}")
-        add_subdirectory(${_file})
-    endif()
-endforeach()
+#add_subdirectory(iomanip)
+#add_subdirectory(proxy)
+#add_subdirectory(iterator)
+#add_subdirectory(variant)
+#add_subdirectory(type_map)
+#add_subdirectory(csv_parser)
+#add_subdirectory(json_parser)
 
 find_program(AWK_EXECUTABLE awk gawk DOC "awk executable")
 file(GLOB_RECURSE SRCS *.hpp)
