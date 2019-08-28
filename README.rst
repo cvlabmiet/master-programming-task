@@ -19,20 +19,19 @@ How to build?
 
 Just use `cmake <https://cmake.org>`_::
 
-    $ mkdir build
-    $ cd build
-    build/ $ cmake ..
-    build/ $ make -j
-    build/ $ ctest
+    $ cmake -B build .
+    $ make -C build -j
+    $ make -C build test
 
 If you want to work with particular project, just uncomment (remove ``#`` sign) string ``add_subdirectory`` with project name.
 You can launch the tests from this project only (shown for ``<myproject>``)::
 
-    build/ $ cmake ..
     build/ $ make -j
-    build/ $ ctest -R <myproject>
+    build/ $ ctest -R <myproject> -V
 
-Or use catch executable for detail report::
+The flag ``-V`` shows detailed report.
+
+Or use catch executable directly::
 
     build/ $ ./<myproject>/tests_<myproject>
 
@@ -58,7 +57,8 @@ Each project is a subproject with
 
 * ``CMakeLists.txt``;
 * ``include`` that represent "source" of a project;
-* ``tests`` is a main part to check task.
+* ``tests`` is a main part to check task;
+* ``README.rst`` that has some useful information about project.
 
 Students should work only with files inside ``include`` folder.
 The main criteria is to pass all tests of a project.
