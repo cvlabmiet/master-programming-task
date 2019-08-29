@@ -43,9 +43,8 @@ TEST_CASE("csv::csv")
     )";
 
     auto i = parser::load_from_string<types::csv::csv>(s, parser::csv::csv);
-    //? Why double parentheses?
-    CHECK((i[0] == std::vector<std::string>{"cell1", "cell2", "cell3"}));
-    CHECK((i[1] == std::vector<std::string>{"miet", "msu", "mephi"}));
+    CHECK(i[0] == std::vector<std::string>{"cell1", "cell2", "cell3"});
+    CHECK(i[1] == std::vector<std::string>{"miet", "msu", "mephi"});
     CHECK(i[2][0] == "with spaces");
     CHECK(i[2][1] == "with,comma");
     CHECK(i[2][2] == "123");
@@ -60,7 +59,7 @@ TEST_CASE("csv::operator_csv")
     line1,m0,m1,m2
     )"_csv;
 
-    CHECK((i[0] == std::vector<std::string>{"header", "h0", "h1", "h2"}));
-    CHECK((i[1] == std::vector<std::string>{"line0", "c0", "c1", "c2"}));
-    CHECK((i[2] == std::vector<std::string>{"line1", "m0", "m1", "m2"}));
+    CHECK(i[0] == std::vector<std::string>{"header", "h0", "h1", "h2"});
+    CHECK(i[1] == std::vector<std::string>{"line0", "c0", "c1", "c2"});
+    CHECK(i[2] == std::vector<std::string>{"line1", "m0", "m1", "m2"});
 }
