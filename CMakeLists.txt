@@ -21,6 +21,7 @@ find_package(Boost 1.68 REQUIRED COMPONENTS system)
 #add_subdirectory(type_map)
 #add_subdirectory(csv_parser)
 #add_subdirectory(json_parser)
+#add_subdirectory(strided_range)
 
 find_program(AWK_EXECUTABLE awk gawk DOC "awk executable")
 file(GLOB_RECURSE SRCS *.hpp)
