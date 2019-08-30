@@ -1,0 +1,11 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: igsha/cxx-miet:0.2
+    steps:
+      - checkout
+      - run: cmake -B build .
+      - run: cd build && make
+      - run: cd build && ctest -V
