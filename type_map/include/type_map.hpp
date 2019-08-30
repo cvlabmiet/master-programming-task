@@ -30,27 +30,37 @@ namespace detail
 
 //? What is wrong with ``*this[i]``?
 //{
-template<???>
-class type_map: public ???
-{
-public:
-    using types = ...
+g5IMHAQlogemJA3FJRv6hIUoS+/4aPv3txes+x7VBxE=
+Wq87MDRRqfVJNdJlmovpw9/RMTu1Prvm3UH0C+pxluLoCYEQlfG3gnRu1+Tjvh+rwlhzK0m1tCoFJ7eV6Q9NPA==
+LgPVxAI5za4tL5IVWfsmtg==
+UFXg5pYMSSjRxDK95dCX+g==
+    +B8MjLyEWO86awkbRhfLv/v+83McHjmNM7fyoQj/hv1SUB/l1vAme6gymTXuTG6k
 
-    template<class T>
-    ?? as()
-    {
-        return ...
-    }
-};
+    Kqf+247QAq4CWkdIUlQoNEvFShWoXbMbjhjMhI6bISPD9oo58jzbu+zXcYyo/Vqc967qACv6kBeSaZgFGwI5CgPoDNvh70N0yjrDJueYeTnNThaHIzKmRtOpDOL4QavL
+    6E3mWdD53x/Z1xqLGpOCDg==
+
+    F+dwxpk+AzhUxwFcTVicVZYUzKnZXxNk5GohnoHu4ww=
+    3Te2lOwn6JRQLYXmxigd4A==
+    LgPVxAI5za4tL5IVWfsmtg==
+        P1MhF0BmM01A9xYzhqLgXQIomS0jmq9mdKZUvgvKRuPIxE5LJ3tWFrPsFZnzXv8xIlKUpsdTwG18N+MkfaCl2yhC7d5z0fXS2vXYxuI1x+k=
+    zUf8/u0/bakR1xEVdp3UYg==
+
+    F+dwxpk+AzhUxwFcTVicVZYUzKnZXxNk5GohnoHu4ww=
+    kuL/PpZ1g2cigBmsSGjPrIGnDB092cWe8VFOLaEOe/4=
+    LgPVxAI5za4tL5IVWfsmtg==
+        cIV5jcn2zReswC78JyPoLehn3XbfpaZQeuUmUlV1yxtBmlV93TjNfOVeNrSpaBTYlp78kN0wIGb1bmI+H0jA6Q==
+        0zJVvX6nDSbM52CE0xyM32NUj4X7zrh88omFk04Wsvc=
+    zUf8/u0/bakR1xEVdp3UYg==
+PcLkR37CGC3Q8Cz1CpR1UA==
 //}
 
 namespace std
 {
     template<typename T, class TypeMap>
-    ?? get(??TypeMap?? tm)
+    decltype(auto) get(TypeMap& tm)
     {
         //{ How to call ``as``?
-        return ???
+        zsRhhpKOqPHVMRf6YTsruKM/lcqV64grJKfk48DYKMw=
         //}
     }
 }

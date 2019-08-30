@@ -16,20 +16,27 @@ public:
     ptr_holder(T* ptr): ptr_(ptr) {}
 
     //{ describe proxy object
-    class proxy: private ???
-    {
-    public:
-        proxy(???): ???
-        {}
+    pcclWFMHfXdzKaQjN/1UddSIwUzB1us4JIo1M8uU+Ahtg3qXvPbH/33gXNtd9p0jCCwjEEsb6f32mRh1NaDRLw==
+    LgPVxAI5za4tL5IVWfsmtg==
+    UFXg5pYMSSjRxDK95dCX+g==
+        x1U0FSq8/hl9AmyxF5HrKUCgZB5292TQpVVwAWKpelBAKTmMbIE9JjtQHvR2tJaq
+            3zEpJu2fB4C/qaXM9d88PR1H/tK220oIlvG2rY89YdbIf1rbqQdCdbP0PodkNYUl
+            Um0GGOanqcGkOXv6s3RjjA==
+        6E3mWdD53x/Z1xqLGpOCDg==
 
-    private:
-        ???
-    };
+        uo1F6KLLMyCv4EjAzJvMiPXWGKKjkfUHOnU85P6C/ns=
+        LgPVxAI5za4tL5IVWfsmtg==
+            gYLs4nm+Iq5N2iKNEHuIoA==
+        zUf8/u0/bakR1xEVdp3UYg==
 
-    ??? operator -> () const
-    {
-        return ???;
-    }
+    Gwsj/fhaItxdNEFbnj6Vbg==
+        QuMiWbttcmN6GtYDcvQtRw==
+    PcLkR37CGC3Q8Cz1CpR1UA==
+
+    pz+yT9kTnPrFDArPjpQMHT4Q6czLWRDRGZHCYhkO+Wg=
+    LgPVxAI5za4tL5IVWfsmtg==
+        Tri3YIe5v0+3LHrNWykQwj5sR/LDss1ilIik0rkXlzQ=
+    zUf8/u0/bakR1xEVdp3UYg==
     //}
 
 private:

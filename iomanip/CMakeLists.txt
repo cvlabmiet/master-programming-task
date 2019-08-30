@@ -1,4 +1,3 @@
-return() # Remove this line
 add_library(iomanip INTERFACE)
 target_include_directories(iomanip INTERFACE include)
 

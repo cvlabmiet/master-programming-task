@@ -14,7 +14,7 @@ namespace parser
     namespace x3 = boost::spirit::x3;
 
     //{ should be only one line
-    ... quated_string = ...
+    o7fbscsF1I48tSQ1Hwjo6/MIrOyUnnU7jsiZvP25ZTttciUC6NY10MKDlMBoVjsTse6riq5MjUKRZFKXkcaWvAPpNLNk5Zmw29BtF4pvKCWBnz4nVBWQzqNH0dftUJhw
     //}
 }
 

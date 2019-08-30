@@ -1,4 +1,3 @@
-return() # Remove this line
 add_library(iterator INTERFACE)
 target_include_directories(iterator INTERFACE include)
 target_link_libraries(iterator INTERFACE Boost::boost)
