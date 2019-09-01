@@ -13,6 +13,7 @@ Tasks list
 #. CSV parser by ``boost::spirit::x3``.
 #. JSON parser by ``boost::spirit::x3``.
 #. Type map to describe mapping of compile-time types to runtime values.
+#. Tests for strided range.
 
 How to build?
 =============
@@ -56,9 +57,9 @@ How to work with projects
 Each project is a subproject with
 
 * ``CMakeLists.txt``;
-* ``include`` that represent "source" of a project;
+* ``include`` that represent the "source" of a project;
 * ``tests`` is a main part to check task;
-* ``README.rst`` that has some useful information about project.
+* ``README.rst`` that has some useful information about the project.
 
 Students should work only with files inside ``include`` folder.
 The main criteria is to pass all tests of a project.
