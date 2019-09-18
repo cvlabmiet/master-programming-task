@@ -8,4 +8,4 @@ jobs:
       - checkout
       - run: cmake -B build .
       - run: cd build && make
-      - run: cd build && ctest -V
+      - run: cd build && ctest -V --timeout 120

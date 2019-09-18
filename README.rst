@@ -18,13 +18,16 @@ Tasks list
 How to build?
 =============
 
+cmake
+-----
+
 Just use `cmake <https://cmake.org>`_::
 
     $ cmake -B build .
     $ make -C build -j
     $ make -C build test
 
-If you want to work with particular project, just uncomment (remove ``#`` sign) string ``add_subdirectory`` with project name.
+If you want to work with particular project, just uncomment (remove ``#`` sign) string ``add_subdirectory`` with the project name.
 You can launch the tests from this project only (shown for ``<myproject>``)::
 
     build/ $ make -j
@@ -35,6 +38,9 @@ The flag ``-V`` shows detailed report.
 Or use catch executable directly::
 
     build/ $ ./<myproject>/tests_<myproject>
+
+docker
+------
 
 Another approach is to use docker image ``igsha/cxx-miet``.
 
@@ -50,6 +56,16 @@ Another approach is to use docker image ``igsha/cxx-miet``.
    * notes for Windows users: you don't need flag ``-u``, replace ``$PWD`` with the name of current directory.
 #. Within docker-session call the same command sequence like was done above (``mkdir``, ``cd``, ``cmake``, etc.).
 #. To exit docker-session press ``Ctrl-D`` or type ``exit`` command.
+
+nix-shell
+---------
+
+If you don't use `NixOS <https://nixos.org>`_, you can still use ``nix-shell`` on linux-like systems.
+
+Install ``nix`` environment by running the command ``curl https://nixos.org/nix/install | sh`` and answer several
+questions.
+Point to the project root directory and run ``nix-shell``.
+Then just follow cmake subsection instructions.
 
 How to work with projects
 =========================

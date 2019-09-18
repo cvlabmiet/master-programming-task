@@ -45,10 +45,16 @@ namespace
         string s = "hello";
         float f = -1.0;
 
-        void method(std::future<void>& f)
+        void method1(std::future<void>& f, std::promise<void>& started)
         {
+            started.set_value();
             f.wait_for(5s);
+        }
+
+        void method2(std::future<void>& f)
+        {
             s = "world";
+            f.wait_for(5s);
         }
     };
 }
@@ -70,32 +76,29 @@ TEST_CASE("proxy::threadsafe")
     my_struct st;
     ptr_holder p(&st);
 
-    for (auto _[[maybe_unused]] : boost::irange(0, 20))
+    for (auto _[[maybe_unused]] : boost::irange(0, 10))
     {
         p->s = "hello";
 
         //? Why I need 2 ``std::promise`` here?
-        std::promise<void> start;
+        std::promise<void> started;
         std::promise<void> notifier;
-        auto thr = std::async([&p, f = std::move(notifier.get_future()), &start]() mutable
+        auto thr = std::async([&p, f = std::move(notifier.get_future()), &started]() mutable
         {
-            start.set_value();
-            p->method(f);
+            p->method1(f, started);
         });
 
-        start.get_future().get(); // start has passed
+        started.get_future().get();
 
-        //? Why ptr_holder is not used here?
+        std::promise<void> notifier2;
+        auto thr2 = std::async([&p, f = std::move(notifier2.get_future())]() mutable
+        {
+            p->method2(f);
+        });
+
+        notifier2.set_value();
         CHECK(st.s == "hello");
-
         notifier.set_value();
-        p->i = 75;
-
-        //? What happens if I delete get()?
-        thr.get();
-
-        CHECK(p->i == 75);
-        CHECK(p->s == "world");
     }
 }
 
