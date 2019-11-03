@@ -6,6 +6,8 @@
 
 #include <catch2/catch.hpp>
 
+#include <variant>
+
 #include <json.hpp>
 #include <parser.hpp>
 

@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.12)
 project(cxx-tasks VERSION 0.2.0 LANGUAGES CXX DESCRIPTION "Home tasks for C++ training")
 
 set(CMAKE_CXX_STANDARD 17)
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    add_compile_options(-Wall -Wextra -pedantic -Werror)
+endif()
 
 include(CTest)
 
