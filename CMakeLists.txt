@@ -25,4 +25,8 @@ add_subdirectory(csv_parser)
 add_subdirectory(json_parser)
 add_subdirectory(strided_range)
 
+file(GLOB_RECURSE SRCS *.hpp)
+add_custom_target(encrypt COMMAND ${CMAKE_COMMAND} "-DSRCS=\"${SRCS}\"" -DENC=TRUE -P ${CMAKE_SOURCE_DIR}/crypt.cmake)
+add_custom_target(decrypt COMMAND ${CMAKE_COMMAND} "-DSRCS=\"${SRCS}\"" -DENC=FALSE -P ${CMAKE_SOURCE_DIR}/crypt.cmake)
+
 add_custom_target(answer COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_SOURCE_DIR} -P ${CMAKE_SOURCE_DIR}/find_answers.cmake)
