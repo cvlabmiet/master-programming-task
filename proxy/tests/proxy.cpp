@@ -17,46 +17,27 @@
 using namespace std;
 using namespace std::chrono_literals;
 
-namespace Catch
-{
-    // meta map<std::ratio type, std::string>
-    template<class T> string ratio_to_string = "unk";
-    template<> string ratio_to_string<std::nano> = "n";
-    template<> string ratio_to_string<std::milli> = "m";
-    template<> string ratio_to_string<std::ratio<1>> = "";
-
-    // to output std::chrono::duration in failed CHECK, instead of "{?} == {?}"
-    template<class R, class P>
-    struct StringMaker<chrono::duration<R, P>>
-    {
-        static string convert(const chrono::duration<R, P>& value)
-        {
-            return to_string(value.count()) + ratio_to_string<P> + "s";
-        }
-    };
-}
-
 namespace
 {
-    // used for tests
-    struct my_struct
+// used for tests
+struct my_struct
+{
+    int i = 0;
+    string s = "hello";
+    float f = -1.0;
+
+    void method1(std::future<void>& f, std::promise<void>& started)
     {
-        int i = 0;
-        string s = "hello";
-        float f = -1.0;
+        started.set_value();
+        f.wait_for(5s);
+    }
 
-        void method1(std::future<void>& f, std::promise<void>& started)
-        {
-            started.set_value();
-            f.wait_for(5s);
-        }
-
-        void method2(std::future<void>& f)
-        {
-            s = "world";
-            f.wait_for(5s);
-        }
-    };
+    void method2(std::future<void>& f)
+    {
+        s = "world";
+        f.wait_for(5s);
+    }
+};
 }
 
 TEST_CASE("proxy::access")
@@ -110,4 +91,13 @@ TEST_CASE("proxy::primitive")
     *(p.operator->().operator->()) = 99;
 
     CHECK(i == 99);
+}
+
+TEST_CASE("proxy::const")
+{
+    int i = 45;
+    const ptr_holder p(&i);
+    const auto& pp = p.operator->();
+
+    CHECK(*(pp.operator->()) == 45);
 }
