@@ -97,9 +97,20 @@ TEST_CASE("iterator::copy_from_vector")
 
 TEST_CASE("iterator::copy_to_vector")
 {
-    const image im1(128, 4, 256);
-    std::vector<uint8_t> v(128 * 4);
+    image im1(128, 4, 256);
+    iota(im1.begin(), im1.end(), 42);
 
+    std::vector<uint8_t> v(128 * 4);
     copy(im1.begin(), im1.end(), v.begin());
+
     CHECK(std::equal(im1.begin(), im1.end(), v.begin(), v.end()));
+}
+
+TEST_CASE("iterator::previous_from_end")
+{
+    image im(128, 4, 256);
+
+    auto it = im.end();
+    --it;
+    CHECK(it == im.begin() + (128 * 4 - 1));
 }
