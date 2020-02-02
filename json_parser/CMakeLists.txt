@@ -1,3 +1,4 @@
+return() # Remove this line
 if(NOT TARGET parser_helper)
     add_subdirectory(${CMAKE_SOURCE_DIR}/parser_helper ${CMAKE_BINARY_DIR}/parser_helper)
 endif()

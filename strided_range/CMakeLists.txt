@@ -1,3 +1,4 @@
+return() # Remove this line
 add_library(strided_range INTERFACE)
 target_include_directories(strided_range INTERFACE include)
 target_link_libraries(strided_range INTERFACE Boost::boost)

@@ -1,3 +1,4 @@
+return() # Remove this line
 add_library(type_map INTERFACE)
 target_include_directories(type_map INTERFACE include)
 
