@@ -1,0 +1,55 @@
+apiVersion: 1.0.0
+metadata:
+  name: cpp-balpa
+attributes:
+  persistVolumes: 'false'
+projects:
+  - name: master-programming-task
+    source:
+      location: 'https://github.com/cvlabmiet/master-programming-task.git'
+      type: git
+      branch: master
+components:
+  - mountSources: true
+    memoryLimit: 1G
+    type: dockerimage
+    image: 'igsha/che-cxx-miet:latest'
+    alias: cpp-dev
+  - id: eclipse/che-theia/7.19.2
+    type: cheEditor
+  - id: eclipse-cdt/cdt-vscode/0.0.7
+    type: chePlugin
+commands:
+  - name: configure
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/master-programming-task'
+        type: exec
+        command: cmake -B build -GNinja -DCMAKE_BUILD_TYPE=Debug
+        component: cpp-dev
+  - name: build
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/master-programming-task'
+        type: exec
+        command: cmake --build build && echo "Build complete"
+        component: cpp-dev
+  - name: run
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/master-programming-task/build'
+        type: exec
+        command: ctest --output-on-failure
+        component: cpp-dev
+  - name: debug
+    actions:
+      - referenceContent: |
+          {
+            "version": "0.2.0",
+            "configurations": [
+                {
+                    "type": "gdb",
+                    "name": "Debug c++ application",
+                    "request": "launch",
+                    "program": "/projects/master-programming-task/build/iomanip/tests_iomanip"
+                }
+            ]
+          }
+        type: vscode-launch

@@ -1,30 +1,31 @@
 # nix-build docker.nix
 # docker load -i ./result
+# docker run -u `id -u`:`id -g` -v $PWD:/projects -it cxx-miet:latest
 
 { pkgs ? import <nixpkgs> {} }:
 
 let
   shell = import ./shell.nix;
-  dateFile = pkgs.runCommand "createdAt.txt" { envVariable = true; } ''date -Iseconds > $out'';
-  createdAt = pkgs.lib.removeSuffix "\n" (builtins.readFile dateFile);
+  # include dev and out
+  out-paths = shell.buildInputs ++ map (x: x.out) (shell.buildInputs ++ shell.nativeBuildInputs);
 
-in pkgs.dockerTools.buildImage {
+in pkgs.dockerTools.buildLayeredImage rec {
   name = "cxx-miet";
-  tag = "0.2";
-  created = createdAt;
-  contents = with pkgs; [ coreutils bashInteractive shell.env ];
-  runAsRoot = ''
-    mkdir /tmp
-    chmod a+rw /tmp
-  '';
+  tag = "0.3";
+  created = "now";
+  contents = [ pkgs.busybox ] ++ out-paths;
   config = {
-    Cmd = [ "bash" ];
-    WorkingDir = "/data";
+    Cmd = [ "sh" ];
+    WorkingDir = "/projects";
     Volumes = {
-      "/data" = {};
+      "/projects" = {};
     };
     Env = [
-      "CMAKE_PREFIX_PATH=${shell.env.outPath}"
+      "CMAKE_PREFIX_PATH=${pkgs.lib.makeSearchPath "" out-paths}"
     ];
   };
+  extraCommands = ''
+    # for valgrind
+    mkdir -m 1777 ./tmp
+  '';
 }

@@ -20,10 +20,14 @@ Requirements
 ============
 
 Use initializer list for type mapper construction.
-
-Method ``as`` works like ``std::get``.
-
 Use only one implementation for ``as``.
-The second implementation should reuse call ``as`` (beware of recursion).
 
 Pass all tests.
+
+Hints
+=====
+
+#. Are you sure you understand the need of ``type_to_index`` structure?
+#. Method ``as`` works like ``std::get``.
+#. `Template from template <https://stackoverflow.com/questions/7397934/calling-template-function-within-template-class>`_.
+#. If you return ``auto`` is considered as returning by value, but ``decltype(auto)`` is considered as returning by reference.

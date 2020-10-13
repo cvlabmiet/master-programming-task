@@ -23,14 +23,14 @@ cmake
 
 Just use `cmake <https://cmake.org>`_::
 
-    $ cmake -B build .
-    $ make -C build -j
-    $ make -C build test
+    $ cmake -B build -GNinja .
+    $ cmake --build build
+    $ cmake --build build test
 
 If you want to work with particular project, just uncomment (remove ``#`` sign) string ``add_subdirectory`` with the project name.
 You can launch the tests from this project only (shown for ``<myproject>``)::
 
-    build/ $ make -j
+    build/ $ cmake --build .
     build/ $ ctest -R <myproject> -V
 
 The flag ``-V`` shows detailed report.
@@ -38,6 +38,8 @@ The flag ``-V`` shows detailed report.
 Or use catch executable directly::
 
     build/ $ ./<myproject>/tests_<myproject>
+
+Instead of ``cmake --build build`` you can use chosen build generator directly (``ninja`` for the example above).
 
 docker
 ------
@@ -47,13 +49,13 @@ Another approach is to use docker image ``igsha/cxx-miet``.
 #. Install `docker <https://www.docker.com>`_.
 #. Pull image and start docker-session::
 
-        $ docker run -u `id -u`:`id -g` -v $PWD:/data -it igsha/cxx-miet:0.2
+        $ docker run -u `id -u`:`id -g` -v $PWD:/projects -it igsha/cxx-miet:latest
         bash-4.4$ <-- this means you are in a docker-session
 
    * once downloaded session will be available locally;
    * flag ``-u `id -u`:`id -g``` is used to bring the same permissions into docker as your local user permissions;
-   * flag ``-v $PWD:/data`` is used to mount your current source directory into docker like folder ``/data``;
-   * notes for Windows users: you don't need flag ``-u``, replace ``$PWD`` with the name of current directory.
+   * flag ``-v $PWD:/projects`` is used to mount your current source directory into the docker like folder ``/projects``;
+   * notes for Windows users: you don't need flag ``-u``, replace ``$PWD`` with the name of the current directory.
 #. Within docker-session call the same command sequence like was done above (``mkdir``, ``cd``, ``cmake``, etc.).
 #. To exit docker-session press ``Ctrl-D`` or type ``exit`` command.
 
@@ -62,10 +64,16 @@ nix-shell
 
 If you don't use `NixOS <https://nixos.org>`_, you can still use ``nix-shell`` on linux-like systems.
 
-Install ``nix`` environment by running the command ``curl https://nixos.org/nix/install | sh`` and answer several
+Install ``nix`` environment by running the command ``curl -L https://nixos.org/nix/install | sh`` and answer several
 questions.
 Point to the project root directory and run ``nix-shell``.
 Then just follow cmake subsection instructions.
+
+Eclipse Che
+-----------
+
+You can use https://che.openshift.io to access IDE based on browser eclipse.
+You need ``eclipse-che.yml`` configuration file from this repository to correctly setup a workspace.
 
 How to work with projects
 =========================
