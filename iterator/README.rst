@@ -20,5 +20,5 @@ Hints
 
 #. Remember that ``index = row * stride + col``, and ``row = [index / stride]`` and ``col = index % stride``.
    Your inner iterator is equivalent to ``index``.
-#. It is enough to implement only ``advance`` method.
+#. It is enough to implement only ``advance`` and ``distance_to`` method.
 #. Your iterator should skip gap between ``width`` and ``stride``, so skip the delta ``stride - width``.

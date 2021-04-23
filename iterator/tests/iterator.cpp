@@ -4,12 +4,54 @@
  * @author Anonymous
  */
 
+#include <algorithm>
+#include <numeric>
+#include <vector>
+
 #include <catch2/catch.hpp>
 
 #include <iterator.hpp>
-#include <numeric>
 
-using namespace std;
+namespace
+{
+
+template<class Container = std::vector<uint8_t>>
+class image
+{
+public:
+    image(size_t width, size_t height, size_t stride):
+        data(stride * height),
+        width_(width),
+        stride_(stride)
+    {}
+
+    auto begin()
+    {
+        return image_iterator(data.begin(), width_, stride_);
+    }
+
+    auto end()
+    {
+        return image_iterator(data.end(), width_, stride_);
+    }
+
+    auto begin() const
+    {
+        return image_iterator(data.begin(), width_, stride_);
+    }
+
+    auto end() const
+    {
+        return image_iterator(data.end(), width_, stride_);
+    }
+
+private:
+    Container data; // image data including strides. Access by (x, y): data[y * stride_ + x]
+    size_t width_;
+    size_t stride_;
+};
+
+} // namespace
 
 TEST_CASE("iterator::operations")
 {
@@ -46,33 +88,38 @@ TEST_CASE("iterator::operations")
     SECTION("advance: delta < width")
     {
         it += 120;
-        CHECK(distance(myimage.begin(), it) == 120);
+        CHECK(std::distance(myimage.begin(), it) == 120);
         it -= 50;
-        CHECK(distance(myimage.begin(), it) == 70);
+        CHECK(std::distance(myimage.begin(), it) == 70);
     }
 
     SECTION("advance: delta > width")
     {
         it += 130;
-        CHECK(distance(myimage.begin(), it) == 130);
+        CHECK(std::distance(myimage.begin(), it) == 130);
         it -= 50;
-        CHECK(distance(myimage.begin(), it) == 80);
+        CHECK(std::distance(myimage.begin(), it) == 80);
         it += 289;
-        CHECK(distance(myimage.begin(), it) == 369);
+        CHECK(std::distance(myimage.begin(), it) == 369);
     }
 
     SECTION("distance")
     {
-        CHECK(distance(it, myimage.end()) == length);
+        CHECK(std::distance(it, myimage.end()) == length);
         it += length / 3 + 17;
-        CHECK(distance(myimage.begin(), it) == length / 3 + 17);
-        CHECK(distance(it, myimage.end()) == length - (length / 3 + 17));
+        CHECK(std::distance(myimage.begin(), it) == length / 3 + 17);
+        CHECK(std::distance(it, myimage.end()) == length - (length / 3 + 17));
     }
 
     SECTION("next row")
     {
-        CHECK(distance(it + 127, it + 128) == 1);
-        CHECK(distance(it + 128, it + 127) == -1);
+        CHECK(std::distance(it + 127, it + 128) == 1);
+        CHECK(std::distance(it + 128, it + 127) == -1);
+    }
+
+    SECTION("prev row")
+    {
+        CHECK(std::distance(myimage.begin() - 1, myimage.begin()) == 1);
     }
 }
 
@@ -89,7 +136,7 @@ TEST_CASE("iterator::copy_from_vector")
 {
     image im1(128, 5, 256);
     std::vector<uint8_t> v(128 * 5);
-    iota(v.begin(), v.end(), 73);
+    std::iota(v.begin(), v.end(), 73);
 
     copy(v.begin(), v.end(), im1.begin());
     CHECK(std::equal(im1.begin(), im1.end(), v.begin(), v.end()));
@@ -98,10 +145,10 @@ TEST_CASE("iterator::copy_from_vector")
 TEST_CASE("iterator::copy_to_vector")
 {
     image im1(128, 4, 256);
-    iota(im1.begin(), im1.end(), 42);
+    std::iota(im1.begin(), im1.end(), 42);
 
     std::vector<uint8_t> v(128 * 4);
-    copy(im1.begin(), im1.end(), v.begin());
+    std::copy(im1.begin(), im1.end(), v.begin());
 
     CHECK(std::equal(im1.begin(), im1.end(), v.begin(), v.end()));
 }
@@ -113,4 +160,11 @@ TEST_CASE("iterator::previous_from_end")
     auto it = im.end();
     --it;
     CHECK(it == im.begin() + (128 * 4 - 1));
+}
+
+TEST_CASE("iterator::dont_touch_my_constructor")
+{
+    std::vector<int> v;
+    image_iterator it(v.begin(), 0, 0);
+    CHECK_NOTHROW(++it);
 }
