@@ -33,6 +33,9 @@ TEST_CASE("variant::recursive_array")
     CHECK(std::get<float>(std::get<number>(arr[1])) == Approx(2.2f));
     CHECK(std::get<int>(std::get<number>(std::get<std::shared_ptr<recursive_array>>(arr[2])->operator[](2))) == -8);
     CHECK(std::get<int>(std::get<number>(arr[3])) == 9);
+
+    const auto arr2 = arr;
+    CHECK(std::get<int>(std::get<number>(arr2[3])) == 9);
 }
 
 TEST_CASE("variant::recursive_array2")
@@ -40,6 +43,9 @@ TEST_CASE("variant::recursive_array2")
     recursive_array2 arr = {1.0f, 2, recursive_array2{7, 9.0f}};
     CHECK(std::get<int>(std::get<number>(arr[1])) == 2);
     CHECK(std::get<float>(std::get<number>(std::get<boost::recursive_wrapper<recursive_array2>>(arr[2]).get()[1])) == 9.0f);
+
+    const auto arr2 = arr;
+    CHECK(std::get<int>(std::get<number>(arr2[1])) == 2);
 }
 
 TEST_CASE("variant::variant_decorator")
@@ -72,6 +78,9 @@ TEST_CASE("variant::variant_decorator")
     {
         v = boost::recursive_wrapper<bool>{true};
         CHECK(v.as<bool>() == true);
+
+        const auto cv = v;
+        CHECK(cv.as<bool>() == true);
     }
 }
 

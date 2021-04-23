@@ -15,17 +15,11 @@
 #include <boost/variant.hpp>
 
 //{ number
-struct number
-{
-
-};
+using number = ...;
 //}
 
 //{ array
-struct array
-{
-
-};
+using array = ...;
 //}
 
 //{ recursive_array
@@ -46,10 +40,14 @@ struct recursive_array2
 template<???>
 struct variant_decorator
 {
+    ?? as() const
+    {
+
+    }
 
     ?? as()
     {
-
+        return ??as()??;
     }
 };
 //}
