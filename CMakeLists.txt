@@ -21,7 +21,6 @@ add_subdirectory(proxy)
 add_subdirectory(iterator)
 add_subdirectory(variant)
 add_subdirectory(type_map)
-add_subdirectory(csv_parser)
 add_subdirectory(json_parser)
 add_subdirectory(strided_range)
 
