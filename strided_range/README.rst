@@ -1,22 +1,22 @@
-About
-=====
+О задании
+=========
 
-This subproject provides 2D-range over linear pointer of image data with stride.
+Предоставление тестов для 2D-диапазона над линейными данными изображения со страйдом.
 
-Requirements
-============
+Требования
+==========
 
-Code is done.
-Write unit tests:
+Код 2D-диапазона уже написан.
+Напишите юнит-тесты:
 
-* Fixed width and dynamic stride.
-  Two cases: stride is bigger than width, and smaller.
-  Use the same data for all cases, ``SECTION`` may help.
-* Fixed stride and dynamic width.
-  The same approach described above.
-* Stride is equal to width.
-* Measure the size of the range.
-  It should vary if stride is different.
-* Create one strided range from another.
-* Show how to create a window in the image with the help of strided range.
-* Provide at least two corner cases that can lead to unambiguous/unpredictable behaviour.
+* Фиксированная ширина и изменяющийся страйд.
+  Рассмотрите два случая: страйд больше и меньше ширины.
+  Используйте одинаковые данные для обоих случаев, ``SECTION`` может помочь в этом.
+* Фиксированный страйд и изменяющаяся ширина.
+  Используйте тот же подход, что описан выше.
+* Страйд равен ширине.
+* Измерение размера диапазона.
+  Он должен отличаться, если страйд разный.
+* Создание диапазона со страйдом из другого диапазона.
+* Покажите как создать окно на изображении с помощью предложенного 2D-диапазона.
+* Предоставьте два крайних случая, которые приводят к неожиданному результату.

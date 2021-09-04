@@ -1,24 +1,23 @@
-About
-=====
+О задании
+=========
 
-This subproject provides 2D-iterator over linear pointer of image data.
+Предоставление 2D-итератора над линейным указателем данных изображения.
 
-Requirements
-============
+Требования
+==========
 
-Use dedicated methods of ``boost::iterator_adaptor``: ``increment``, ``decrement``, ``advance``, ``distance_to``.
+Достаточно перегрузить методы ``boost::iterator_adaptor``: ``increment``, ``decrement``, ``advance``, ``distance_to``.
+Обязательно прохождение всех тестов.
 
-Pass all tests.
+Подсказки
+=========
 
-Hints
-=====
+#. Используйте две переменные базовых итераторов:
 
-#. Use a couple of base iterators:
+   * первый итератор указывает на начало строки изображения;
+   * второй итератор указывает на нужное значение изображения (абсолютная позиция).
 
-   * the first is for the beginning of a row;
-   * the second is an absolute linear iterator of an image.
-
-#. Remember that ``index = row * stride + col``, and ``row = [index / stride]`` and ``col = index % stride``.
-   Your inner iterator is equivalent to ``index``.
-#. It is enough to implement only ``advance`` and ``distance_to`` method.
-#. Your iterator should skip gap between ``width`` and ``stride``, so skip the delta ``stride - width``.
+#. Помните, что ``index = row * stride + col``, поэтому ``row = [index / stride]`` и ``col = index % stride``.
+   Внутренний итератор должен быть эквивалентен ``index``.
+#. Достаточно реализовать только методы ``advance`` и ``distance_to``.
+#. Реализуемый итератор должен пропускать пространство между ``width`` и ``stride``, что аналогично смещению итератора на разницу ``stride - width``.

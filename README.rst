@@ -1,107 +1,100 @@
-About
-=====
+О проекте
+=========
 
-This project is intended to test students skills in C++ language.
+Основная цель проекта - тестирование умений программирования на языке C++ у студентов.
 
-Tasks list
-----------
+Список заданий
+--------------
 
-#. I/O stream manipulators.
-#. Proxy object.
-#. Iterator.
-#. Using of ``std::variant``.
-#. CSV parser by ``boost::spirit::x3``.
-#. JSON parser by ``boost::spirit::x3``.
-#. Type map to describe mapping of compile-time types to runtime values.
-#. Tests for strided range.
+#. Потоковые манипуляторы ввода/вывода
+#. Прокси-объект
+#. Итератор
+#. Использование ``std::variant``
+#. Парсер CSV на основе ``boost::spirit::x3``
+#. Персер JSON на основе ``boost::spirit::x3``
+#. Ассоциативный массив для хранения типа, в котором значения задаются в рантайме
+#. Написание тестов для диапазона со страйдом
 
-How to build?
+Как собирать?
 =============
 
 cmake
 -----
 
-Just use `cmake <https://cmake.org>`_::
+Необходимо просто следовать инструкции, описанной на сайте `cmake <https://cmake.org>`_::
 
     $ cmake -B build -GNinja .
     $ cmake --build build
     $ cmake --build build test
 
-If you want to work with particular project, just uncomment (remove ``#`` sign) string ``add_subdirectory`` with the project name.
-You can launch the tests from this project only (shown for ``<myproject>``)::
+Если работа осуществляется над конкретным заданием, нужно удалить первую строку ``return()`` из файла ``CMakeLists.txt``.
+Запуск тест конкретного задания (в логе тестов задание выглядит как ``<myproject>``)::
 
     build/ $ cmake --build .
     build/ $ ctest -R <myproject> -V
 
-The flag ``-V`` shows detailed report.
+Флаг ``-V`` показывает детальный отчёт запуска тестов.
 
-Or use catch executable directly::
+Другой вариант запуска тестов - вызов исполнимого файла напрямую, из директории задания в дереве сборки::
 
     build/ $ ./<myproject>/tests_<myproject>
 
-Instead of ``cmake --build build`` you can use chosen build generator directly (``ninja`` for the example above).
+Вместо команды ``cmake --build build`` можно вызывать команду генератора сборки (для примера выше команда ``ninja``).
 
 docker
 ------
 
-Another approach is to use docker image ``igsha/cxx-miet``.
+Ещё один подход сборки проекта - это использование докер-образа ``igsha/cxx-miet``.
 
-#. Install `docker <https://www.docker.com>`_.
-#. Pull image and start docker-session::
+#. Установка `docker <https://www.docker.com>`_.
+#. Команды для загрузки образа и запуска докер-сессии::
 
         $ docker run -u `id -u`:`id -g` -v $PWD:/projects -it igsha/cxx-miet:latest
-        bash-4.4$ <-- this means you are in a docker-session
+        bash-4.4$ <-- это означает, что сейчас активна докер-сессия
 
-   * once downloaded session will be available locally;
-   * flag ``-u `id -u`:`id -g``` is used to bring the same permissions into docker as your local user permissions;
-   * flag ``-v $PWD:/projects`` is used to mount your current source directory into the docker like folder ``/projects``;
-   * notes for Windows users: you don't need flag ``-u``, replace ``$PWD`` with the name of the current directory.
-#. Within docker-session call the same command sequence like was done above (``mkdir``, ``cd``, ``cmake``, etc.).
-#. To exit docker-session press ``Ctrl-D`` or type ``exit`` command.
+   * после хотя бы одного запуска сессии, образ будет всегда доступен локально (если не почистить его вручную);
+   * флаг ``-u `id -u`:`id -g``` используется, чтобы передать некоторые разрешения текущего пользователя внутрь докера;
+   * флаг ``-v $PWD:/projects`` используется, чтобы примонтировать текущую директорию с кодом внутрь докера в виде директории ``/projects``;
+   * заменчание для Windows-пользователей: флаг ``-u`` не нужен, замените ``$PWD`` на имя текущей директории.
+#. Внутри докер-сессии необходимо вызывать те же команды, которые были описаны выше (``mkdir``, ``cd``, ``cmake`` и т.д.).
+#. Чтобы выйти из докер-сессии нажмите ``Ctrl-D`` или напишите команду ``exit``.
 
 nix-shell
 ---------
 
-If you don't use `NixOS <https://nixos.org>`_, you can still use ``nix-shell`` on linux-like systems.
+Использование ``nix-shell`` возможно вне операционной системе `NixOS <https://nixos.org>`_.
+Для этого подойдёт любая линукс-подобная система (даже MacOS или WSL для Windows10).
 
-Install ``nix`` environment by running the command ``curl -L https://nixos.org/nix/install | sh`` and answer several
-questions.
-Point to the project root directory and run ``nix-shell``.
-Then just follow cmake subsection instructions.
+Установить ``nix`` окружение можно с помощью команды ``curl -L https://nixos.org/nix/install | sh``, попутно ответив на несколько вопросов.
+Далее перейдите в корень проекта, который необходимо собрать, и вызовите команду ``nix-shell``.
+После загрузки пакетов в окружение проекта просто следуйте инструкции по сборке проекта с помощью ``cmake``.
 
 Eclipse Che
 -----------
 
-You can use https://che.openshift.io to access IDE based on browser eclipse.
-You need ``eclipse-che.yml`` configuration file from this repository to correctly setup a workspace.
+Для сборки проекта можно использовать https://che.openshift.io, чтобы получить доступ к браузерной IDE  на базе eclipse.
+Понадобиться конфигурационный файл ``eclipse-che.yml`` из этого репозитория, чтобы правильно настроить рабочее окружение.
 
-How to work with projects
-=========================
+Как работать с заданиями
+========================
 
-Each project is a subproject with
+Каждое задание - это подпроект с файлами и папками:
 
-* ``CMakeLists.txt``;
-* ``include`` that represent the "source" of a project;
-* ``tests`` is a main part to check task;
-* ``README.rst`` that has some useful information about the project.
+* файл ``CMakeLists.txt``;
+* директория ``include``, которая представляет из себя "код" задания;
+* директория ``tests`` содержит код для проверки задания;
+* файл ``README.rst`` содержит полезную информацию о задании.
 
-Students should work only with files inside ``include`` folder.
-The main criteria is to pass all tests of a project.
+Студенты должны работать с файлами только из директории ``include``.
+Исключением является последнее задание, где студентами необходимо править файлы в директории ``tests``.
+Основной критерий сдачи задания - это прохождение всех тестов в подпроекте задания.
 
-How to answer in-source questions
-=================================
+Вопросы для саморазвития
+========================
 
-There are some questions in the source of projects that have the form of C-comments ``//?``.
-Print the answer just below a question using the form of C-comment ``//!``.
-
-Use these questions as a hint to a task.
-
-Additional questions
-====================
-
-#. How to declare and define function within another function?
-#. How to copy lambda?
-#. How to call non-constant method of a member within constant method?
+#. Как объявить и определить функцию внутри другой функции?
+#. Как скопировать лямбда-функцию?
+#. Как вызвать неконстантный метод класса члена класса, находясь в константном методе?
 
    .. code::
 
@@ -120,12 +113,13 @@ Additional questions
             ?cba? obj;
         }
 
-#. How to initialize members of the same class in different constructors?
-#. How to initialize a member in separate function within member initializer list?
+#. Как инициализировать переменные класса в разных конструкторах одинаково?
+#. Как инициализировать переменную класса через отдельную функцию в списке инициализации конструктора?
 
-[optional] Write complete project (``CMakeLists.txt``, folder hierarchy and tests).
-Themes:
+Темы для собственных pet-проектов:
 
-* `INI-parser <https://en.wikipedia.org/wiki/INI_file>`_ with EBNF in comments;
-* implement iterator of multidimensional array with the ability to choose the direction of iterations (by x-, y- or z-axis, etc.);
-* provide example to work with `google-protobuf <https://developers.google.com/protocol-buffers>`_.
+* `INI-парсер <https://en.wikipedia.org/wiki/INI_file>`_ с EBNF в комментариях;
+* реализация мультиразверного итератора с возможностью выбора направления итерации (по осям x, y или z и и.д.);
+* реализация примера работы с `google-protobuf <https://developers.google.com/protocol-buffers>`_;
+* реализация битового итератора;
+* реализация `дуальных чисел <https://en.wikipedia.org/wiki/Dual_number>`_.
