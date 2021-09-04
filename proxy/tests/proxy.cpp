@@ -61,7 +61,6 @@ TEST_CASE("proxy::threadsafe")
     {
         p->s = "hello";
 
-        //? Why I need 2 ``std::promise`` here?
         std::promise<void> started;
         std::promise<void> notifier;
         auto thr = std::async([&p, f = std::move(notifier.get_future()), &started]() mutable
