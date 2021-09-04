@@ -1,20 +1,20 @@
-About
-=====
+О задании
+=========
 
-This subproject describes input/output manipulators for ``std::stream`` objects.
+В задании необходимо написать некоторые манипуляторы ввода/вывода для работы с ``std::stream`` объектами.
 
-Requirements
-============
+Требования
+==========
 
-Pass all tests.
+Все тесты должны завершаться без ошибок.
 
-Hints
-=====
+Подсказки
+=========
 
-#. iostream can call functions with ``std::ostream&(std::ostream&)`` signatures.
-#. You can provide overloaded ``std::ostream& operator<<(std::ostream&, YourClass)`` to print content of ``YourClass``.
-#. To avoid global objects (function or variable) use ``inline`` keyword.
-#. Apply friend ``operator <<`` to your classes.
-#. You can return some specific object with overloaded ``operator <<`` from outer structure`s ``operator <<``.
-#. Be careful: return ``std::ostream&`` by reference, but your wrappers should be returned by value.
-#. Use type provided by template to apply operation ``+``.
+#. iostream может вызывать функции с сигнатурой ``std::ostream&(std::ostream&)``.
+#. Можно предоставлять перегрузку ``std::ostream& operator<<(std::ostream&, YourClass)``, чтобы получить доступ к содержимому ``YourClass`` и что-то напечатать.
+#. Избегать ошибки с глобальными объектами (функции или переменные) используейте ключевое слово ``inline`` для функций и ``const`` для переменных.
+#. Применяйте дружественный оператор ``operator <<`` к своему классу.
+#. Можно возвращать специфичный объект с помощью перегрузки ``operator <<`` из перегрузки оператора ``operator <<`` другого класса.
+#. Будьте бдительны: возврат ``std::ostream&`` по ссылке, но сами класс-обёртки должны возвращаться по значению.
+#. Используйте шаблоны, когда будете реализовавыть операцию ``+``.

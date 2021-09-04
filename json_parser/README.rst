@@ -1,31 +1,30 @@
-About
-=====
+О задании
+=========
 
-This subproject provides json parser.
+Предоставление парсера формата JSON.
 
-Json is a recursive format used to store data.
-Types of json include:
+JSON - это рекурсивный формат для хранения текстовых данных.
+Типы данных json включают в себя:
 
-* primitive types: boolean, number, string, null;
-* arrays that contain different types;
-* key-value pairs (object), where key is always string.
+* примитивные типы: булевы, числа, строки, нулевой тип ``null``;
+* массивы, которые могут содержать произвольные типы;
+* ассоциативные пары ключ-значение, где ключ всегда представим типом строка.
 
-Each part of parser has own name space.
-This is alternative to classes with methods.
-It is a common practice for the ``boost::spirit::x3``.
+Каждая часть парсера имеет своё пространство имён.
+Это альтернативный подход к классам и методам и является обычной практикой для ``boost::spirit::x3``.
 
-Requirements
-============
+Требования
+==========
 
-Implement ``parser_helper``.
+Реализуйте сначала ``parser_helper``.
 
-Describe types.
-They should be simple, std-containers is enough.
+Опишите типы.
+Они должны быть простыми, std-контейнеров будет достаточно.
 
-Describe rules.
-You should use parser types created on the previous step.
+Опишите правила парсинга.
+Необходимо использовать типы, которые были описаны на предыдущем шаге.
 
-Define rules.
-Recurrent rules can be defined separately.
+Определите правила.
+Рекурсивные правила могут быть объявлены раздельно.
 
-Pass all tests.
+Обязательно прохождение всех тестов.

@@ -1,17 +1,17 @@
-About
-=====
+О задании
+=========
 
-This subproject provides proxy wrapper with synchronization.
+Предоставление потокобезопасной прокси обёртки.
 
-Requirements
-============
+Требования
+==========
 
-Try to use inheritance, not aggregation.
+Постарайтесь использовать наследование, а не аггрегацию.
 
-Pass all tests.
+Обязательно прохождение всех тестов.
 
-Hints
-=====
+Подсказки
+=========
 
-#. ``operator ->`` is recursive: you can return object with ``operator ->`` that returns object with ``operator ->`` and so on.
-#. Hint: ``std::lock_guard`` comply with RAII concept.
+#. Оператор ``operator ->`` является рекурсивным: можно возвращать объект с ``operator ->``, который возвращает объект с ``operator ->`` и т.д.
+#. ``std::lock_guard`` совместим с концепцией RAII.
