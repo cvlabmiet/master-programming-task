@@ -13,7 +13,6 @@ namespace
 {
     std::string loads(const std::string& s)
     {
-        //? Is copy constructor used?
         return parser::load_from_string<std::string>(s, parser::quoted_string);
     }
 }
@@ -38,7 +37,6 @@ TEST_CASE("quoted_string::quote")
 
 TEST_CASE("quoted_string::newline")
 {
-    //? Why is it so weird string?
     std::string s = R"("text with
 newlines
 ")";

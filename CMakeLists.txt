@@ -23,5 +23,3 @@ add_subdirectory(variant)
 add_subdirectory(type_map)
 add_subdirectory(json_parser)
 add_subdirectory(strided_range)
-
-add_custom_target(answer COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_SOURCE_DIR} -P ${CMAKE_SOURCE_DIR}/find_answers.cmake)

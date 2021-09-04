@@ -12,7 +12,6 @@
 #include <vector>
 
 #include <boost/spirit/home/x3.hpp>
-//? Why I need ``std_pair`` header? Do I need one for std::map?
 #include <boost/fusion/adapted/std_pair.hpp>
 
 #include "parser.hpp"
@@ -50,8 +49,6 @@ namespace parser
 {
     namespace json
     {
-        //? Why I need ``sfloat_`` instead of just ``x3::float_``?
-        //? What is the syntax ``class array_``? Is it wrong?
         const auto sfloat_ = x3::real_parser<float, x3::strict_real_policies<float>>();
 
         //{ describe json grammar

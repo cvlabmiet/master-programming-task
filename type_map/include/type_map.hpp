@@ -28,7 +28,6 @@ namespace detail
     };
 }
 
-//? What is wrong with ``*this[i]``?
 //{
 template<???>
 class type_map: public ???

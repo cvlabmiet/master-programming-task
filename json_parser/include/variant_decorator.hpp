@@ -11,10 +11,6 @@
 
 namespace x3 = boost::spirit::x3;
 
-//? How to inherit x3::variant constructor & ``operator=``?
-//? Why I need inherited constructor & ``operator=``?
-//? How many constructors did I inherit?
-//? Do I need my own constructor & ``operator=``? Why?
 //{
 template<???>
 struct variant_decorator: public x3::variant<???>
@@ -22,7 +18,6 @@ struct variant_decorator: public x3::variant<???>
     using ???operator=;
     using ...
 
-    //? Do I need a ``const``-version?
     template<class T>
     T& as()
     {
