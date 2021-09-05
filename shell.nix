@@ -1,12 +1,12 @@
 with import <nixpkgs> {};
 mkShell rec {
   name = "cxx-tasks";
-  buildInputs = [ boost168 catch2 ];
+  buildInputs = [ boost catch2 ];
   nativeBuildInputs = [
     cmake
     gnumake
     ninja
-    gcc9
+    gcc
     binutils-unwrapped
     gdb
     valgrind
@@ -15,4 +15,10 @@ mkShell rec {
     gawk
   ];
   hardeningDisable = [ "all" ];
+  CTEST_OUTPUT_ON_FAILURE = "ON";
+  shellHook = ''
+    tcmake() { cmake -GNinja $cmakeFlags "$@"; }
+    export -f tcmake
+    echo Welcome to ${name} environment!
+  '';
 }
