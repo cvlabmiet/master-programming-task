@@ -168,3 +168,31 @@ TEST_CASE("iterator::dont_touch_my_constructor")
     image_iterator it(v.begin(), 0, 0);
     CHECK_NOTHROW(++it);
 }
+
+TEST_CASE("iterator::reject_advance_workaround")
+{
+    class custom_iterator : public boost::iterator_facade<custom_iterator, int, boost::random_access_traversal_tag>
+    {
+    public:
+        void advance(int x)
+        {
+            if (x == 1)
+                throw std::logic_error("operator++ in advance is prohibited");
+
+            if (x == -1)
+                throw std::logic_error("operator-- in advance is prohibited");
+        }
+
+        typename iterator_facade::difference_type distance_to(const custom_iterator& x) const
+        {
+            return i - x.i;
+        }
+
+        int i = 0;
+    };
+
+    custom_iterator cc{};
+    image_iterator it(cc, 10, 15);
+    CHECK_NOTHROW(it + 5);
+    CHECK_NOTHROW(it - 44);
+}
