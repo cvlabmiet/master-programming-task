@@ -165,7 +165,7 @@ TEST_CASE("iterator::previous_from_end")
 TEST_CASE("iterator::dont_touch_my_constructor")
 {
     std::vector<int> v;
-    image_iterator it(v.begin(), 0, 0);
+    image_iterator it(v.begin(), 1, 1);
     CHECK_NOTHROW(++it);
 }
 
