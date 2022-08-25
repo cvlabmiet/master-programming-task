@@ -23,6 +23,7 @@ struct variant_decorator: public x3::variant<???>
     {
         return ...
     }
+};
 //}
 
 #endif // __VARIANT_DECORATOR_HPP__

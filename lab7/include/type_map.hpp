@@ -45,13 +45,13 @@ public:
 
 namespace std
 {
+    //{
     template<typename T, class TypeMap>
     ?? get(??TypeMap?? tm)
     {
-        //{ How to call ``as``?
-        return ???
-        //}
+        return tm.??? as<??>();
     }
+    //}
 }
 
 #endif // __TYPE_MAP_HPP__

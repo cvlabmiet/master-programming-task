@@ -4,7 +4,7 @@
  * @author Anonymous
  */
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <parser.hpp>
 #include <quoted_string.hpp>
@@ -13,7 +13,7 @@ namespace
 {
     std::string loads(const std::string& s)
     {
-        return parser::load_from_string<std::string>(s, parser::quoted_string);
+        return json::load_from_string<std::string>(s, json::parser::quoted_string);
     }
 }
 
@@ -47,7 +47,7 @@ newlines
 
 TEST_CASE("quoted_string::failure")
 {
-    std::vector<std::string> s = {
+    auto s = {
         "abc",
         R"("first quote only)",
         R"(some text and "quote")"

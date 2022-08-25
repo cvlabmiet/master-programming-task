@@ -9,7 +9,7 @@
 
 #include <boost/spirit/home/x3.hpp>
 
-namespace parser
+namespace json::parser
 {
     namespace x3 = boost::spirit::x3;
 

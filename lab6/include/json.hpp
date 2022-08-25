@@ -30,59 +30,50 @@
  *      json := array | object
  */
 
-namespace types
+namespace json::types
 {
-    namespace json
-    {
-        //{ describe json data types
-        ... value = ...
+    //{ describe json data types
+    ... value = ...
 
-        ... array
-        ... object
+    ... array
+    ... object
 
-        ... json
-        //}
-    }
+    ... json
+    //}
 }
 
-namespace parser
+namespace json::parser
 {
-    namespace json
-    {
-        const auto sfloat_ = x3::real_parser<float, x3::strict_real_policies<float>>();
+    const auto sfloat_ = x3::real_parser<float, x3::strict_real_policies<float>>();
 
-        //{ describe json grammar
-        ... number = ...
-        ... nullable = ...
+    //{ describe json grammar
+    ... number = ...
+    ... nullable = ...
 
-        ... array = ...
-        ... object = ...
-        ... json = ...
+    ... array = ...
+    ... object = ...
+    ... json = ...
 
-        ... value = ...
+    ... value = ...
 
-        ... key_value = ...
+    ... key_value = ...
 
-        ... array??? = ...
-        ... object??? = ...
-        ... json??? = ...
-        //}
+    ... array??? = ...
+    ... object??? = ...
+    ... json??? = ...
+    //}
 
-        BOOST_SPIRIT_DEFINE(array, object, json)
-    }
+    BOOST_SPIRIT_DEFINE(array, object, json)
 }
 
-namespace literals
+namespace json::literals
 {
-    namespace json
+    //{ describe ``_json`` literal
+    inline ... _json...
     {
-        //{ describe ``_json`` literal
-        ... _json...
-        {
 
-        }
-        //}
     }
+    //}
 }
 
 #endif // __JSON_HPP__

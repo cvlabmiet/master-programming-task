@@ -4,7 +4,7 @@
  * @author Anonymous
  */
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <string>
 
@@ -15,22 +15,22 @@ TEST_CASE("variant::number")
     number i = 123;
     number f = -569.6f;
     CHECK(std::get<int>(i) == 123);
-    CHECK(std::get<float>(f) == Approx(-569.6f));
+    CHECK(std::get<float>(f) == Catch::Approx(-569.6f));
 }
 
 TEST_CASE("variant::array")
 {
     array arr = {123, -59.6f, 8.53f, -8};
     CHECK(std::get<int>(arr[0]) == 123);
-    CHECK(std::get<float>(arr[1]) == Approx(-59.6f));
-    CHECK(std::get<float>(arr[2]) == Approx(8.53f));
+    CHECK(std::get<float>(arr[1]) == Catch::Approx(-59.6f));
+    CHECK(std::get<float>(arr[2]) == Catch::Approx(8.53f));
     CHECK(std::get<int>(arr[3]) == -8);
 }
 
 TEST_CASE("variant::recursive_array")
 {
     recursive_array arr = {1, 2.2f, std::shared_ptr<recursive_array>(new recursive_array{3, 7.9f, -8}), 9};
-    CHECK(std::get<float>(std::get<number>(arr[1])) == Approx(2.2f));
+    CHECK(std::get<float>(std::get<number>(arr[1])) == Catch::Approx(2.2f));
     CHECK(std::get<int>(std::get<number>(std::get<std::shared_ptr<recursive_array>>(arr[2])->operator[](2))) == -8);
     CHECK(std::get<int>(std::get<number>(arr[3])) == 9);
 
@@ -42,7 +42,7 @@ TEST_CASE("variant::recursive_array2")
 {
     recursive_array2 arr = {1.0f, 2, recursive_array2{7, 9.0f}};
     CHECK(std::get<int>(std::get<number>(arr[1])) == 2);
-    CHECK(std::get<float>(std::get<number>(std::get<boost::recursive_wrapper<recursive_array2>>(arr[2]).get()[1])) == 9.0f);
+    CHECK(std::get<float>(std::get<number>(std::get<boost::recursive_wrapper<recursive_array2>>(arr[2]).get()[1])) == Catch::Approx(9.0f));
 
     const auto arr2 = arr;
     CHECK(std::get<int>(std::get<number>(arr2[1])) == 2);
@@ -59,7 +59,7 @@ TEST_CASE("variant::variant_decorator")
         CHECK(v.as<std::string>() == "text");
 
         v = 33.56f;
-        CHECK(v.as<float>() == Approx(33.56f));
+        CHECK(v.as<float>() == Catch::Approx(33.56f));
     }
 
     SECTION("const")

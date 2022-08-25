@@ -23,14 +23,14 @@ using array = ...;
 //}
 
 //{ recursive_array
-struct recursive_array
+struct recursive_array : public ...
 {
 
 };
 //}
 
 //{ recursive_array2
-struct recursive_array2
+struct recursive_array2 : public ...
 {
 
 };
@@ -53,7 +53,7 @@ struct variant_decorator
 //}
 
 //{ recursive_map
-struct recursive_map
+struct recursive_map : public ...
 {
 
 };

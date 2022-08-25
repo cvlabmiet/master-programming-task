@@ -11,7 +11,7 @@
 
 #include <string>
 
-namespace parser
+namespace json
 {
     template<class Difference>
     class iterator_exhausted: public std::range_error

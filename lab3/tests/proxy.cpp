@@ -4,7 +4,7 @@
  * @author Anonymous
  */
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <chrono>
 #include <string>
@@ -26,16 +26,16 @@ struct my_struct
     string s = "hello";
     float f = -1.0;
 
-    void method1(std::future<void>& f, std::promise<void>& started)
+    void method1(std::future<void>& g, std::promise<void>& started)
     {
         started.set_value();
-        f.wait_for(5s);
+        g.wait_for(5s);
     }
 
-    void method2(std::future<void>& f)
+    void method2(std::future<void>& g)
     {
         s = "world";
-        f.wait_for(5s);
+        g.wait_for(5s);
     }
 };
 }
@@ -49,7 +49,7 @@ TEST_CASE("proxy::access")
 
     CHECK(p->i == 54);
     CHECK(p->s == "la-la-la");
-    CHECK(p->f == Approx(-5863.21));
+    CHECK(p->f == Catch::Approx(-5863.21));
 }
 
 TEST_CASE("proxy::threadsafe")

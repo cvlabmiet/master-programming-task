@@ -9,7 +9,7 @@
 #include <boost/range/iterator_range.hpp>
 #include <boost/range/irange.hpp>
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <strided_range.hpp>
 
@@ -32,14 +32,14 @@ TEST_CASE("strided_range::width_bigger_stride")
 //{
 TEST_CASE("strided_range::stride_equal_width")
 {
-    CHECK(false); // remove me
+    CHECK(???);
 }
 //}
 
 //{ Use boost::size.
 TEST_CASE("strided_range::distance")
 {
-    CHECK(false); // remove me
+    CHECK(???);
 }
 //}
 
@@ -47,8 +47,8 @@ TEST_CASE("strided_range::distance")
 TEST_CASE("strided_range::from_strided")
 {
     auto a = {???};
-    auto rng = make_strided_range(a, AAA, AAA + 1);
-    CHECK(make_strided_range(rng, AAA - 1, AAA) == std::vector{???});
+    auto rng = make_strided_range(a, ??, ?? + 1);
+    CHECK(make_strided_range(rng, ?? - 1, ??) == std::vector{???});
 }
 //}
 
@@ -64,7 +64,7 @@ TEST_CASE("strided_range::window")
                   0, 0, 0, 0, 0, 0,
                   0, 0, 0, 0, 0, 0};
 
-    auto cropped_range = boost::make_iterator_range(a, ???, ???);
+    auto cropped_range = boost::make_iterator_range(a, ???, -???);
     auto window = make_strided_range(cropped_range, ??, ??);
     CHECK(window == boost::irange(1, 17));
 }
@@ -73,13 +73,13 @@ TEST_CASE("strided_range::window")
 //{
 TEST_CASE("strided_range::corner_case1::zero_width")
 {
-    CHECK(false); // remove me
+    CHECK(???);
 }
 //}
 
 //{
 TEST_CASE("strided_range::corner_case2::zero_stride")
 {
-    CHECK(false); // remove me
+    CHECK(???);
 }
 //}

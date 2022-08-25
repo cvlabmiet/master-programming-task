@@ -4,7 +4,7 @@
  * @author Anonymous
  */
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <cstdint>
 
@@ -12,7 +12,7 @@
 
 TEST_CASE("type_map::int")
 {
-    const type_map<int, int, float, uint8_t> m{{4, 86, -9}};
+    const type_map<int, int, float, uint8_t> m{4, 86, -9};
 
     SECTION("std::get")
     {
@@ -33,9 +33,9 @@ TEST_CASE("type_map::enum")
 {
     enum type_e { U8 = 0, I8, U16 = 10, I16, U32 = 20, I32, F32 = 30 };
 
-    const type_map<type_e, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float> m{{
+    const type_map<type_e, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, float> m{
         U8, I8, U16, I16, U32, I32, F32
-    }};
+    };
 
     CHECK(std::get<int8_t>(m) == I8);
     CHECK(std::get<uint32_t>(m) == U32);
@@ -45,7 +45,7 @@ TEST_CASE("type_map::enum")
 
 TEST_CASE("type_map::write")
 {
-    type_map<int, int, float, uint8_t> m{{1, 2, 3}};
+    type_map<int, int, float, uint8_t> m{1, 2, 3};
 
     SECTION("std::get")
     {

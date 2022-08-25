@@ -1,7 +1,7 @@
 with import <nixpkgs> {};
 mkShell rec {
-  name = "cxx-tasks";
-  buildInputs = [ boost catch2 ];
+  name = "master-programming-task";
+  buildInputs = [ boost catch2_3 ];
   nativeBuildInputs = [
     cmake
     gnumake
@@ -16,9 +16,8 @@ mkShell rec {
   ];
   hardeningDisable = [ "all" ];
   CTEST_OUTPUT_ON_FAILURE = "ON";
+  CMAKE_GENERATOR = "Ninja";
   shellHook = ''
-    tcmake() { cmake -GNinja $cmakeFlags "$@"; }
-    export -f tcmake
     echo Welcome to ${name} environment!
   '';
 }

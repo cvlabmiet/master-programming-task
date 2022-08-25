@@ -5,5 +5,5 @@ target_link_libraries(strided_range INTERFACE Boost::boost)
 
 file(GLOB TESTS tests/*.cpp)
 add_executable(tests_strided_range ${TESTS})
-target_link_libraries(tests_strided_range strided_range catch_entry)
+target_link_libraries(tests_strided_range strided_range Catch2::Catch2WithMain)
 catch_discover_tests(tests_strided_range)
