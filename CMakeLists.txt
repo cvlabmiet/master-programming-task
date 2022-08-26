@@ -7,12 +7,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
 endif()
 
 find_package(Catch2 3 REQUIRED)
+find_package(Boost 1.79 REQUIRED)
 
 include(CTest)
 include(Catch)
-
-set(BUILD_SHARED_LIBS ON) # need for Boost::system
-find_package(Boost 1.79 REQUIRED COMPONENTS system)
 
 add_subdirectory(lab1)
 add_subdirectory(lab2)
