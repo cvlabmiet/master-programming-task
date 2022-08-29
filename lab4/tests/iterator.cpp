@@ -119,7 +119,8 @@ TEST_CASE("iterator::operations")
 
     SECTION("prev row")
     {
-        CHECK(std::distance(myimage.begin() - 1, myimage.begin()) == 1);
+        auto it = myimage.begin() + 128;
+        CHECK(std::distance(it - 1, it) == 1);
     }
 }
 
@@ -164,7 +165,7 @@ TEST_CASE("iterator::previous_from_end")
 
 TEST_CASE("iterator::dont_touch_my_constructor")
 {
-    std::vector<int> v;
+    std::vector<int> v(1);
     image_iterator it(v.begin(), 1, 1);
     CHECK_NOTHROW(++it);
 }

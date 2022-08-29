@@ -4,6 +4,9 @@ project(cxx-tasks VERSION 0.2.1 LANGUAGES CXX DESCRIPTION "Home tasks for C++ tr
 set(CMAKE_CXX_STANDARD 20)
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     add_compile_options(-Wall -Wextra -pedantic -Werror)
+    if(CMAKE_BUILD_TYPE STREQUAL Debug)
+        add_compile_definitions(_GLIBCXX_DEBUG=1)
+    endif()
 endif()
 
 find_package(Catch2 3 REQUIRED)
