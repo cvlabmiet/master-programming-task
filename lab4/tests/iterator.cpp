@@ -119,7 +119,7 @@ TEST_CASE("iterator::operations")
 
     SECTION("prev row")
     {
-        auto it = myimage.begin() + 128;
+        it += 128;
         CHECK(std::distance(it - 1, it) == 1);
     }
 }
