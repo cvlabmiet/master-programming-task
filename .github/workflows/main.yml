@@ -24,7 +24,7 @@ jobs:
       run: nix-shell --run "exit 0"
     - name: Build target and test
       run: |
-        [[ ! $(git diff --name-only HEAD^ -- | grep "/tests/" | grep -v "strided_range/tests/") ]]
+        [[ ! $(git diff --name-only HEAD^ -- | grep "/tests/" | grep -v "lab8/tests/") ]]
         cmake -B build -DCMAKE_BUILD_TYPE=Debug
         cmake --build build -j
         ctest --test-dir build --timeout 120 -T memcheck
