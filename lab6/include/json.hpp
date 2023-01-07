@@ -12,14 +12,11 @@
 #include <vector>
 
 #include <boost/spirit/home/x3.hpp>
+#include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/fusion/adapted/std_pair.hpp>
 
-#include "parser.hpp"
-#include "quoted_string.hpp"
-#include "variant_decorator.hpp"
-
 /* Json EBNF specification (https://www.json.org)
- *      string := \" ([^\"] | \\\")* \"
+ *      string := \" (\\ . | [^\"])* \"
  *      number := [0-9]+(\.[0-9]*)?
  *      boolean := "true" | "false"
  *      nullable := "null"
@@ -29,6 +26,8 @@
  *      object := '{' key_value (',' key_value)* '}'
  *      json := array | object
  */
+
+namespace x3 = boost::spirit::x3;
 
 namespace json::types
 {
@@ -49,6 +48,7 @@ namespace json::parser
     //{ describe json grammar
     ... number = ...
     ... nullable = ...
+    ... quated_string = ...
 
     ... array = ...
     ... object = ...
@@ -64,16 +64,6 @@ namespace json::parser
     //}
 
     BOOST_SPIRIT_DEFINE(array, object, json)
-}
-
-namespace json::literals
-{
-    //{ describe ``_json`` literal
-    inline ... _json...
-    {
-
-    }
-    //}
 }
 
 #endif // __JSON_HPP__

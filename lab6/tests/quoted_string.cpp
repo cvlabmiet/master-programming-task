@@ -6,8 +6,9 @@
 
 #include <catch2/catch_all.hpp>
 
-#include <parser.hpp>
-#include <quoted_string.hpp>
+#include <json.hpp>
+
+#include "parser.hpp"
 
 namespace
 {
@@ -17,25 +18,25 @@ namespace
     }
 }
 
-TEST_CASE("quoted_string::spaces")
+TEST_CASE("json::quoted_string::spaces")
 {
     auto i = loads(R"#(" text with spaces ")#");
     CHECK(i == " text with spaces ");
 }
 
-TEST_CASE("quoted_string::comma")
+TEST_CASE("json::quoted_string::comma")
 {
     auto i = loads(R"#("abc comma (,)")#");
     CHECK(i == R"(abc comma (,))");
 }
 
-TEST_CASE("quoted_string::quote")
+TEST_CASE("json::quoted_string::quote")
 {
     auto i = loads(R"#("text with \"quote\"")#");
     CHECK(i == R"(text with "quote")");
 }
 
-TEST_CASE("quoted_string::newline")
+TEST_CASE("json::quoted_string::newline")
 {
     std::string s = R"("text with
 newlines
@@ -45,7 +46,7 @@ newlines
     CHECK(i == "text with\nnewlines\n");
 }
 
-TEST_CASE("quoted_string::failure")
+TEST_CASE("json::quoted_string::failure")
 {
     auto s = {
         "abc",

@@ -9,7 +9,8 @@
 #include <variant>
 
 #include <json.hpp>
-#include <parser.hpp>
+
+#include "parser.hpp"
 
 TEST_CASE("json::number")
 {
@@ -34,37 +35,37 @@ TEST_CASE("json::array")
     SECTION("the same type")
     {
         auto i = json::load_from_string<json::types::array>("[1, 2, 3]", json::parser::array);
-        CHECK(i[0].as<int>() == 1);
-        CHECK(i[1].as<int>() == 2);
-        CHECK(i[2].as<int>() == 3);
+        CHECK(boost::get<int>(i[0]) == 1);
+        CHECK(boost::get<int>(i[1]) == 2);
+        CHECK(boost::get<int>(i[2]) == 3);
     }
 
     SECTION("different types")
     {
         auto i = json::load_from_string<json::types::array>(R"([ "abc", "er", 123, -58.2, null, false ])", json::parser::array);
-        CHECK(i[0].as<std::string>() == "abc");
-        CHECK(i[1].as<std::string>() == "er");
-        CHECK(i[2].as<int>() == 123);
-        CHECK(i[3].as<float>() == Catch::Approx(-58.2f));
-        CHECK(i[4].as<nullptr_t>() == nullptr);
-        CHECK(i[5].as<bool>() == false);
+        CHECK(boost::get<std::string>(i[0]) == "abc");
+        CHECK(boost::get<std::string>(i[1]) == "er");
+        CHECK(boost::get<int>(i[2]) == 123);
+        CHECK(boost::get<float>(i[3]) == Catch::Approx(-58.2f));
+        CHECK(boost::get<nullptr_t>(i[4]) == nullptr);
+        CHECK(boost::get<bool>(i[5]) == false);
     }
 
     SECTION("self type")
     {
         auto i = json::load_from_string<json::types::array>(R"([[1, 2], ["some", false, -2.5], null, "abc"])", json::parser::array);
 
-        auto& sub0 = i[0].as<json::types::array>();
-        CHECK(sub0[0].as<int>() == 1);
-        CHECK(sub0[1].as<int>() == 2);
+        auto& sub0 = boost::get<x3::forward_ast<json::types::array>>(i[0]).get();
+        CHECK(boost::get<int>(sub0[0]) == 1);
+        CHECK(boost::get<int>(sub0[1]) == 2);
 
-        auto& sub1 = i[1].as<json::types::array>();
-        CHECK(sub1[0].as<std::string>() == "some");
-        CHECK(sub1[1].as<bool>() == false);
-        CHECK(sub1[2].as<float>() == Catch::Approx(-2.5f));
+        auto& sub1 = boost::get<x3::forward_ast<json::types::array>>(i[1]).get();
+        CHECK(boost::get<std::string>(sub1[0]) == "some");
+        CHECK(boost::get<bool>(sub1[1]) == false);
+        CHECK(boost::get<float>(sub1[2]) == Catch::Approx(-2.5f));
 
-        CHECK(i[2].as<nullptr_t>() == nullptr);
-        CHECK(i[3].as<std::string>() == "abc");
+        CHECK(boost::get<nullptr_t>(i[2]) == nullptr);
+        CHECK(boost::get<std::string>(i[3]) == "abc");
     }
 }
 
@@ -74,15 +75,15 @@ TEST_CASE("json::object")
     {
         auto s = R"({ "number": 99, "string": "text", "boolean": true, "null": null, "array":[1,2,3] })";
         auto i = json::load_from_string<json::types::object>(s, json::parser::object);
-        CHECK(i["number"].as<int>() == 99);
-        CHECK(i["string"].as<std::string>() == "text");
-        CHECK(i["boolean"].as<bool>() == true);
-        CHECK(i["null"].as<nullptr_t>() == nullptr);
+        CHECK(boost::get<int>(i["number"]) == 99);
+        CHECK(boost::get<std::string>(i["string"]) == "text");
+        CHECK(boost::get<bool>(i["boolean"]) == true);
+        CHECK(boost::get<nullptr_t>(i["null"]) == nullptr);
 
-        auto& subarray = i["array"].as<json::types::array>();
-        CHECK(subarray[0].as<int>() == 1);
-        CHECK(subarray[1].as<int>() == 2);
-        CHECK(subarray[2].as<int>() == 3);
+        auto& subarray = boost::get<x3::forward_ast<json::types::array>>(i["array"]).get();
+        CHECK(boost::get<int>(subarray[0]) == 1);
+        CHECK(boost::get<int>(subarray[1]) == 2);
+        CHECK(boost::get<int>(subarray[2]) == 3);
     }
 
     SECTION("recursion")
@@ -90,13 +91,13 @@ TEST_CASE("json::object")
         auto s = R"({"nest": {"val": 7, "next":{"key": 87, "val": true}}, "end": false})";
         auto i = json::load_from_string<json::types::object>(s, json::parser::object);
 
-        CHECK(i["end"].as<bool>() == false);
-        auto& sub = i["nest"].as<json::types::object>();
-        CHECK(sub["val"].as<int>() == 7);
+        CHECK(boost::get<bool>(i["end"]) == false);
+        auto& sub = boost::get<x3::forward_ast<json::types::object>>(i["nest"]).get();
+        CHECK(boost::get<int>(sub["val"]) == 7);
 
-        auto& subsub = sub["next"].as<json::types::object>();
-        CHECK(subsub["key"].as<int>() == 87);
-        CHECK(subsub["val"].as<bool>() == true);
+        auto& subsub = boost::get<x3::forward_ast<json::types::object>>(sub["next"]).get();
+        CHECK(boost::get<int>(subsub["key"]) == 87);
+        CHECK(boost::get<bool>(subsub["val"]) == true);
     }
 }
 
@@ -106,28 +107,18 @@ TEST_CASE("json::json")
     {
         auto s = R"({"message": "text", "val": 123})";
         auto i = json::load_from_string<json::types::json>(s, json::parser::json);
-        auto& obj = i.as<json::types::object>();
-        CHECK(obj["message"].as<std::string>() == "text");
-        CHECK(obj["val"].as<int>() == 123);
+        auto& obj = boost::get<json::types::object>(i);
+        CHECK(boost::get<std::string>(obj["message"]) == "text");
+        CHECK(boost::get<int>(obj["val"]) == 123);
     }
 
     SECTION("root is array")
     {
         auto s = R"(["text", 13, false])";
         auto i = json::load_from_string<json::types::json>(s, json::parser::json);
-        auto& arr = i.as<json::types::array>();
-        CHECK(arr[0].as<std::string>() == "text");
-        CHECK(arr[1].as<int>() == 13);
-        CHECK(arr[2].as<bool>() == false);
+        auto& arr = boost::get<json::types::array>(i);
+        CHECK(boost::get<std::string>(arr[0]) == "text");
+        CHECK(boost::get<int>(arr[1]) == 13);
+        CHECK(boost::get<bool>(arr[2]) == false);
     }
-}
-
-TEST_CASE("json::operator_json")
-{
-    using namespace json::literals;
-
-    auto i = R"({"text": "message", "number": 123})"_json;
-    const auto& j = i.as<json::types::object>();
-    CHECK(j.at("text").as<std::string>() == "message");
-    CHECK(j.at("number").as<int>() == 123);
 }
