@@ -6,38 +6,42 @@
 
 #include <catch2/catch_all.hpp>
 
-#include <chrono>
 #include <string>
-#include <future>
 
 #include <proxy.hpp>
-
-#include <boost/range/irange.hpp>
-
-using namespace std;
-using namespace std::chrono_literals;
 
 namespace
 {
 // used for tests
 struct my_struct
 {
-    int i = 0;
-    string s = "hello";
-    float f = -1.0;
+    int i;
+    std::string s;
+    float f;
+};
 
-    void method1(std::future<void>& g, std::promise<void>& started)
+struct global_mutex_mock
+{
+    static int counter;
+
+    global_mutex_mock()
     {
-        started.set_value();
-        g.wait_for(5s);
+        counter = 0;
     }
 
-    void method2(std::future<void>& g)
+    void lock()
     {
-        s = "world";
-        g.wait_for(5s);
+        counter++;
+    }
+
+    void unlock()
+    {
+        counter--;
     }
 };
+
+int global_mutex_mock::counter = 0;
+
 }
 
 TEST_CASE("proxy::access")
@@ -50,36 +54,6 @@ TEST_CASE("proxy::access")
     CHECK(p->i == 54);
     CHECK(p->s == "la-la-la");
     CHECK(p->f == Catch::Approx(-5863.21));
-}
-
-TEST_CASE("proxy::threadsafe")
-{
-    my_struct st;
-    ptr_holder p(&st);
-
-    for (auto _[[maybe_unused]] : boost::irange(0, 10))
-    {
-        p->s = "hello";
-
-        std::promise<void> started;
-        std::promise<void> notifier;
-        auto thr = std::async([&p, f = std::move(notifier.get_future()), &started]() mutable
-        {
-            p->method1(f, started);
-        });
-
-        started.get_future().get();
-
-        std::promise<void> notifier2;
-        auto thr2 = std::async([&p, f = std::move(notifier2.get_future())]() mutable
-        {
-            p->method2(f);
-        });
-
-        notifier2.set_value();
-        CHECK(st.s == "hello");
-        notifier.set_value();
-    }
 }
 
 TEST_CASE("proxy::primitive")
@@ -99,4 +73,54 @@ TEST_CASE("proxy::const")
     const auto& pp = p.operator->();
 
     CHECK(*(pp.operator->()) == 45);
+}
+
+TEST_CASE("proxy::local_injection")
+{
+    struct mutex_mock
+    {
+        int counter = 0;
+
+        void lock()
+        {
+            counter++;
+        }
+
+        void unlock()
+        {
+            counter--;
+        }
+    } my_mutex{};
+
+    {
+        ptr_holder<int, mutex_mock>::proxy p(nullptr, my_mutex);
+        CHECK(my_mutex.counter == 1);
+
+        auto pointer = p.operator->();
+        CHECK(my_mutex.counter == 1);
+        CHECK(pointer == nullptr);
+
+        ptr_holder<int, mutex_mock>::proxy p2(nullptr, my_mutex);
+        CHECK(my_mutex.counter == 2);
+    }
+
+    CHECK(my_mutex.counter == 0);
+}
+
+TEST_CASE("proxy::global_injection")
+{
+    my_struct my{4456, "lala", -8.5};
+    ptr_holder<my_struct, global_mutex_mock> p(&my);
+    CHECK(global_mutex_mock::counter == 0);
+
+    CHECK(p->i == 4456);
+    CHECK(global_mutex_mock::counter == 0);
+
+    {
+        const auto& pp = p.operator->();
+        CHECK(global_mutex_mock::counter == 1);
+        CHECK(pp->f == Catch::Approx(-8.5));
+        CHECK(global_mutex_mock::counter == 1);
+    }
+    CHECK(global_mutex_mock::counter == 0);
 }

@@ -9,7 +9,7 @@
 
 #include <mutex>
 
-template<class T>
+template<class T, class MutexInjection = std::mutex>
 class ptr_holder
 {
 public:
@@ -34,7 +34,7 @@ public:
 
 private:
     T* ptr_;
-    mutable std::mutex mutex_;
+    mutable MutexInjection mutex_;
 };
 
 #endif // __PROXY_HPP__
