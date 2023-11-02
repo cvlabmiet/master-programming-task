@@ -197,3 +197,13 @@ TEST_CASE("iterator::reject_advance_workaround")
     CHECK_NOTHROW(it + 5);
     CHECK_NOTHROW(it - 44);
 }
+
+TEST_CASE("iterator::negative_step")
+{
+    image im(30, 5, 32);
+    auto it = im.begin();
+    it += 4 * 30 + 10;
+    CHECK(it - im.begin() == 4 * 30 + 10);
+    it -= 23;
+    CHECK(it - im.begin() == 3 * 30 + 17);
+}
